@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Internship Domain Recommender</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f9;
+      padding: 20px;
+    }
+    .container {
+      max-width: 600px;
+      margin: auto;
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h2 {
+      text-align: center;
+    }
+    textarea, button {
+      width: 100%;
+      margin-top: 10px;
+      padding: 10px;
+      font-size: 16px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: bold;
+      text-align: center;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Find Your Best Internship Domain</h2>
+    
+    <label>What are your interests?</label>
+    <textarea id="interests" rows="3" placeholder="E.g., I love working with data and Python..."></textarea>
+
+    <label>What experience do you have?</label>
+    <textarea id="experience" rows="3" placeholder="E.g., I built a machine learning project..."></textarea>
+
+    <button onclick="recommendDomain()">Get Recommendation</button>
+
+    <div id="result"></div>
+  </div>
+
+  <script>
+    const domains = [
+      { name: "Data Science", keywords: "data analysis statistics pandas numpy" },
+      { name: "Machine Learning", keywords: "machine learning models sklearn prediction training" },
+      { name: "Artificial Intelligence", keywords: "artificial intelligence ai deep learning neural networks" },
+      { name: "Web Development", keywords: "html css javascript react websites" },
+      { name: "Full Stack Development", keywords: "frontend backend nodejs express react database api" },
+      { name: "Cybersecurity", keywords: "security hacking networks encryption" },
+      { name: "Mobile App Development", keywords: "android ios apps flutter kotlin" },
+      { name: "Embedded Systems", keywords: "c microcontrollers iot hardware electronics" },
+      { name: "Cloud Computing", keywords: "aws azure cloud servers devops" }
+    ];
+
+    function recommendDomain() {
+      const interests = document.getElementById("interests").value.toLowerCase();
+      const experience = document.getElementById("experience").value.toLowerCase();
+      const studentText = interests + " " + experience;
+
+      let bestMatch = "";
+      let maxMatches = 0;
+
+      domains.forEach(domain => {
+        let keywords = domain.keywords.split(" ");
+        let matches = 0;
+        keywords.forEach(keyword => {
+          if (studentText.includes(keyword)) {
+            matches++;
+          }
+        });
+        if (matches > maxMatches) {
+          maxMatches = matches;
+          bestMatch = domain.name;
+        }
+      });
+
+      const result = document.getElementById("result");
+      if (bestMatch) {
+        result.innerText = "✅ Recommended Domain: " + bestMatch;
+      } else {
+        result.innerText = "❌ Sorry, we couldn't find a perfect match. Try adding more info!";
+      }
+    }
+  </script>
+</body>
+</html>
